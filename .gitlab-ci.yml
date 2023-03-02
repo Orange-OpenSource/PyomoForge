@@ -1,0 +1,51 @@
+include:
+  - project: "to-be-continuous/python"
+    ref: "6.0.2"
+    file: "templates/gitlab-ci-python.yml"
+  - project: 'to-be-continuous/custom/ort'
+    ref: 'master'
+    file: '/templates/gitlab-ci-ort.yml'
+  - project: 'to-be-continuous/custom/fossology'
+    ref: '1.0.0'
+    file: '/templates/gitlab-ci-fossology.yml'
+
+
+variables:
+  PYLINT_ENABLED: "true"
+  PYTEST_ENABLED: "true"
+  SAFETY_ENABLED: "true"
+  BANDIT_ENABLED: "false"
+  PYTHON_RELEASE_ENABLED: "true"
+  PYTHON_PACKAGE_ENABLED: "true"
+
+antlr:
+  tags:
+    - graas
+    - prod
+    - shared
+  image: ubuntu:20.04
+  stage: pre-build
+  script:
+    - apt-get update
+    - apt-get install -y antlr4
+    - antlr4 -Dlanguage=Python3 LaTeX.g4 -visitor -o src/latex
+  artifacts:
+    paths:
+      - src/latex
+    expire_in: 1 week
+
+py-lint:
+  allow_failure: true
+
+stages:
+  - pre-build
+  - build
+  - test
+  - package-build
+  - package-test
+  - infra
+  - deploy
+  - acceptance
+  - publish
+  - infra-prod
+  - production

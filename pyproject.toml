@@ -1,0 +1,29 @@
+[build-system]
+# Minimum requirements for the build system to execute.
+requires = ["setuptools", "wheel"]  # PEP 508 specifications.
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "tex2pyomo"
+description = "Library to convert MIP written in TeX to Pyomo"
+readme = "README.md"
+keywords = ["MIP", "tex", "pyomo"]
+license = {text = "Proprietary"}
+classifiers = [
+    "Framework :: Django",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    'antlr4-python3-runtime==4.7.2',
+]
+
+dynamic = ['version']
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  ".", "src",
+]

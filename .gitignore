@@ -1,0 +1,8 @@
+src/latex/
+venv/
+__pycache__
+.antlr
+treeviewer/tex2pyomo/src/main/antlr4/tex2pyomo/LaTeX.g4
+dist/
+tex2pyomo.egg-info/
+MIS-model.tex
